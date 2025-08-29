@@ -1,6 +1,7 @@
 require('dotenv').config();
 
-const express = require('express');
+const express = require('express'); 
+const cors = require('cors');
 const configViewEngine = require('./config/viewEngine');
 const apiRoutes = require('./routes/api');
 const connection = require('./config/database');
@@ -10,6 +11,7 @@ const app = express();
 
 const port = process.env.PORT || 8888;
 
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 
