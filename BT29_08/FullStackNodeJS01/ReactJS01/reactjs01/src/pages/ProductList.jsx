@@ -1,26 +1,25 @@
-import { CrownOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const HomePage = () => {
+const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get(`http://localhost:8080/products?page=${page}&limit=6`);
+      const res = await axios.get(`http://localhost:5000/products?page=${page}&limit=6`);
       const newProducts = res.data.DT.products;
 
       setProducts((prev) => [...prev, ...newProducts]);
       setPage(page + 1);
 
       if (products.length + newProducts.length >= res.data.DT.total) {
-        setHasMore(false);
+        setHasMore(false); // hết dữ liệu
       }
-    } catch (err) {
-      console.error("❌ Lỗi khi fetch sản phẩm:", err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -30,11 +29,8 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>
-        <CrownOutlined /> Danh sách sản phẩm
-      </h1>
-
+    <div>
+      <h2>Danh sách sản phẩm</h2>
       <InfiniteScroll
         dataLength={products.length}
         next={fetchProducts}
@@ -42,31 +38,12 @@ const HomePage = () => {
         loader={<h4>Đang tải thêm...</h4>}
         endMessage={<p style={{ textAlign: "center" }}>Đã tải hết sản phẩm 🎉</p>}
       >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "15px",
-            marginTop: "20px",
-          }}
-        >
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
           {products.map((p) => (
-            <div
-              key={p._id}
-              style={{
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                padding: "10px",
-                textAlign: "center",
-              }}
-            >
-              <img
-                src={p.image}
-                alt={p.name}
-                style={{ width: "100%", borderRadius: "8px" }}
-              />
+            <div key={p._id} style={{ border: "1px solid #ccc", padding: "10px" }}>
+              <img src={p.image} alt={p.name} style={{ width: "100%" }} />
               <h3>{p.name}</h3>
-              <p>Giá: {p.price.toLocaleString()} VND</p>
+              <p>Giá: {p.price} VND</p>
             </div>
           ))}
         </div>
@@ -75,4 +52,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default ProductList;

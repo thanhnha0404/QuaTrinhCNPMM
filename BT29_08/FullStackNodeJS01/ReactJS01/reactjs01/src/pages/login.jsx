@@ -30,7 +30,7 @@ const LoginPage = () => {
   return (
     <div style={{ minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Row justify="center" style={{ width: '100%' }}>
-        <Col xs={22} sm={18} md={12} lg={8}>
+      <Col xs={24} sm={24} md={24} lg={24}>
           <fieldset style={{ padding: '15px', margin: '15px', border: '1px solid #ccc', borderRadius: '5px' }}>
           <legend>Đăng nhập</legend>
           <Form name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" layout="vertical">
