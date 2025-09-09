@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 
+
 const HomePage = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
