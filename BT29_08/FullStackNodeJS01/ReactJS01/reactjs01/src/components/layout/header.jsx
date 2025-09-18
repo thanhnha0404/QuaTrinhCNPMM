@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react'
-import { UsergroupAddOutlined, HomeOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons'
+import { UsergroupAddOutlined, HomeOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, HeartOutlined, HeartFilled } from '@ant-design/icons'
 import { Menu } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/auth.context.jsx'
+import { FavoritesContext } from '../context/favorites.context.jsx'
 
 const Header = () => {
   const navigate = useNavigate()
   const { auth, setAuth } = useContext(AuthContext)
+  const { favoriteIds } = useContext(FavoritesContext)
 
   const setAuthNull = () => {
     setAuth({
@@ -26,9 +28,19 @@ const Header = () => {
 
   const items = [
     {
-      label: <Link to={'/'}>Home Page</Link>,
+      label: <Link to={'/'}>Trang chủ</Link>,
       key: 'home',
       icon: <HomeOutlined />,
+    },
+    {
+      label: <Link to={'/search'}>Tìm kiếm nâng cao</Link>,
+      key: 'search',
+      icon: <SearchOutlined />,
+    },
+    {
+      label: <Link to={'/favorites'}>Yêu thích ({favoriteIds.length})</Link>,
+      key: 'favorites',
+      icon: favoriteIds.length > 0 ? <HeartFilled style={{ color: 'red' }} /> : <HeartOutlined />,
     },
     ...(auth?.isAuthenticated
       ? [
